@@ -172,6 +172,7 @@ return [
         App\Providers\JetstreamServiceProvider::class,
         App\Providers\TenancyServiceProvider::class,
         App\Providers\TenantRouteServiceProvider::class,
+        Spatie\Permission\PermissionServiceProvider::class,
         
     ])->toArray(),
 

@@ -2,28 +2,61 @@
 import AppLayout from '@/Layouts/AppLayout.vue';
 import { useForm } from '@inertiajs/inertia-vue3'
 import { Link } from '@inertiajs/inertia-vue3'
+import DataTable from '@/Components/DataTable/BaseTable.vue'
+import ActionDropdown from '@/Components/DataTable/ActionDropdown.vue'
+import {
+    HomeIcon,
+    ChevronRightIcon
+} from '@heroicons/vue/24/outline'
 
 defineProps({
     domains: Object
 })
+
+const columns = [
+    { label: '#', key: 'index' },
+    { label: 'Domain', key: 'domain' },
+    { label: 'Created', key: 'created_at' }
+]
 
 </script>
 
 <template>
     <AppLayout title="Domain">
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Domain
-            </h2>
-            <Link :href="route('domains.create')" class="inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-sm text-white hover:bg-indigo-700 focus:outline-none">
-                + Create Domain
-            </Link>
+            <div class="flex w-full items-center p-2">
+                <div class="flex items-center text-sm text-gray-600 dark:text-white">
+                    <HomeIcon class="w-4 h-4 mx-1" />
+                    <span class="mx-1 mt-[3px]">Home</span>
+                    <ChevronRightIcon class="w-4 h-4 mx-1 mt-[1px]" />
+                    <span class="mx-1 mt-[3px]">Domain</span>
+                </div>
+            </div>
         </template>
 
-        <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="py-2">
+            <div class="px-0 mb-4 mt-4">
+                <Link :href="route('domains.create')" class="inline-flex items-center px-4 py-2 bg-primary border border-transparent rounded-md font-semibold text-sm text-white hover:bg-primary focus:outline-none">
+                    + Create Domain
+                </Link>
+            </div>
+            <div class="px-0">
                 <div class="bg-white shadow rounded-lg overflow-hidden">
-                    <table class="min-w-full divide-y divide-gray-200">
+                    <DataTable
+                        :columns="columns"
+                        :rows="domains.data"
+                        :links="domains.links"
+                        empty-text="No domains found."
+                    >
+                        <template #actions="{ row }">
+                            <ActionDropdown
+                                :view-url="route('domains.show', row.id)"
+                                :edit-url="route('domains.edit', row.id)"
+                                :delete-url="route('domains.destroy', row.id)"
+                            />
+                        </template>
+                    </DataTable>
+                    <!-- <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50">
                             <tr>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">#</th>
@@ -76,7 +109,7 @@ defineProps({
                                 'text-gray-500 pointer-events-none': !link.url
                             }"
                         />
-                    </div>
+                    </div> -->
 
                 </div>
             </div>

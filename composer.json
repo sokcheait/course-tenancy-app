@@ -12,6 +12,8 @@
         "laravel/jetstream": "^4.0",
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
+        "rap2hpoutre/laravel-log-viewer": "^2.5",
+        "spatie/laravel-permission": "^6.24",
         "stancl/tenancy": "^3.9",
         "tightenco/ziggy": "^2.0"
     },

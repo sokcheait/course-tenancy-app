@@ -6,6 +6,8 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\DomainController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +28,7 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
+Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
 
 Route::get('/admin/login', function () {
     return Inertia::render('Auth/Login');
@@ -87,4 +90,9 @@ Route::middleware([
     })->name('dashboard');
     
     Route::resource('/domains', DomainController::class);
+    Route::prefix('admin')->name('admin.')
+        ->group(function () {
+            Route::resource('users', UserController::class);
+            Route::resource('roles', RoleController::class);
+        });
 });
