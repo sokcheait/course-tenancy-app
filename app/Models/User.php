@@ -10,6 +10,7 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use App\Models\Address;
 
 class User extends Authenticatable
 {
@@ -29,6 +30,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'access_level_master',
+        'access_level','first_name','last_name','gender','date_of_birth','phone_number','nationality','marital_status','is_active'
     ];
 
     /**
@@ -60,4 +63,18 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function addresses()
+    {
+        return $this->morphMany(Address::class, 'addressable');
+    }
+
+    public function primaryAddress()
+    {
+        return $this->morphOne(Address::class, 'addressable')->where('is_primary', true);
+    }
+    public function scopeActive(Builder $query)
+    {
+        return $query->where('is_active', true);
+    }
 }

@@ -1,6 +1,6 @@
 <template>
-    <div class="p-2 w-full relative">
-        <label class="block mt-2 pb-2">
+    <div class="p-1 w-full relative">
+        <label class="block mt-1 pb-1 text-sm">
             {{ label }}
             <span v-if="required" class="text-red-500">*</span>
         </label>
@@ -76,7 +76,7 @@ export default {
         const selectedValue = ref(props.modelValue);
 
         const selectedLabel = computed(() => {
-            const selected = props.options.find((o) => o.value === selectedValue.value);
+            const selected = props?.options?.find((o) => o.value === selectedValue.value);
             return selected ? selected.label : "";
         });
 

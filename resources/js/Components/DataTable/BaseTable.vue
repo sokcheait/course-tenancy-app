@@ -53,33 +53,45 @@ defineProps({
             <!-- Body -->
             <tbody class="bg-white divide-y divide-gray-200">
                 <tr v-for="(row, index) in rows" :key="row.id ?? index">
+                    
+                    <!-- LOOP COLUMN -->
                     <td
                         v-for="col in columns"
                         :key="col.key"
-                        class="px-6 py-4 text-sm text-gray-500"
+                        class="px-6 py-4 text-sm text-gray-600"
                     >
-                        <span v-if="col.key === 'index'">
+                        <!-- INDEX -->
+                        <template v-if="col.key === 'index'">
                             {{ index + 1 }}
-                        </span>
+                        </template>
 
-                        <span v-else>
+                        <!-- CUSTOM SLOT COLUMN -->
+                        <template v-else-if="$slots[col.key]">
+                            <slot :name="col.key" :row="row" :value="row[col.key]" :index="index" />
+                        </template>
+
+                        <!-- FORMATTER -->
+                        <template v-else-if="col.formatter">
+                            {{ col.formatter(row[col.key], row) }}
+                        </template>
+
+                        <!-- DEFAULT -->
+                        <template v-else>
                             {{ row[col.key] }}
-                        </span>
+                        </template>
                     </td>
 
-                    <!-- Actions slot -->
+                    <!-- ACTION SLOT -->
                     <td v-if="$slots.actions"
                         class="px-6 py-4 text-right text-sm">
                         <slot name="actions" :row="row" :index="index" />
                     </td>
                 </tr>
 
-                <!-- Empty -->
+                <!-- EMPTY -->
                 <tr v-if="rows.length === 0">
-                    <td
-                        :colspan="columns.length + ($slots.actions ? 1 : 0)"
-                        class="text-center py-6 text-gray-500"
-                    >
+                    <td :colspan="columns.length + ($slots.actions ? 1 : 0)"
+                        class="text-center py-6 text-gray-400">
                         {{ emptyText }}
                     </td>
                 </tr>

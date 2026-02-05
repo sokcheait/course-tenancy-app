@@ -2,7 +2,7 @@
     <header class="relative bg-white dark:bg-darker border-b dark:border-primary-darker">
         <div class="flex items-center justify-between px-4 py-2">
             <a href="/" class="text-xl font-bold tracking-wider uppercase text-primary-dark dark:text-light">
-                K-WD
+                Sok-Chea
             </a>
 
             <!-- Desktop actions -->

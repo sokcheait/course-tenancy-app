@@ -1,6 +1,6 @@
 <template>
-    <div class="p-2 w-full">
-        <label class="mt-2 pb-2 block">
+    <div class="p-1 w-full">
+        <label class="mt-1 pb-1 block text-sm">
             {{ label }}
             <span v-if="required" class="text-red-500">*</span>
         </label>
