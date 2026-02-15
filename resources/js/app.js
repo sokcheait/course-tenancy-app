@@ -21,6 +21,27 @@ createInertiaApp({
             .use(Toast)
             .use(VueSweetalert2)
             .use(ZiggyVue)
+            .mixin({methods: {
+                can: function(permissions) {
+                    var param = Array(permissions)
+                    var allPermissions = this.$page.props.auth.can;
+                    var hasPermission = false;
+                    param.forEach(function(item){
+                        if(allPermissions[item]){
+                            hasPermission = true;  
+                        }
+                    });
+                    return hasPermission;
+                },
+                is_superAdmin: function(val) {
+                    var access_level_master = this.$page.props.auth.user.access_level_master;
+                    var hasPermission = false;
+                    if(access_level_master==true){
+                        hasPermission = true;
+                    }
+                    return hasPermission;
+                }
+            }})
             .mount(el);
     },
     progress: {

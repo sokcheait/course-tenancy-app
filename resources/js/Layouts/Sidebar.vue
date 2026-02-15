@@ -12,7 +12,7 @@
 
 <script setup>
 import { usePage } from '@inertiajs/vue3'
-import Sidebar from '@/Layouts/Sidebar'
+import Sidebar from '@/Layouts/Sidebar/index.js'
 
 import SidebarItem from './SidebarItem.vue'
 import SidebarDropdown from './SidebarDropdown.vue'

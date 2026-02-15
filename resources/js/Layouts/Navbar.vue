@@ -26,7 +26,9 @@
                 	<BellIcon class="w-5 h-5" />
                 </div>
 
-                <Dropdown align="right" width="48">
+                <base-setting />
+
+                <!-- <Dropdown align="right" width="48">
                     <template #trigger>
                         <div class="cursor-pointer p-2 rounded-full transition-colors bg-primary-50 text-primary-lighter hover:bg-primary-100 dark:bg-dark dark:hover:bg-primary-dark">
                             <Cog6ToothIcon class="w-5 h-5" />
@@ -37,7 +39,7 @@
                             Settings Account
                         </div>
                     </template>
-                </Dropdown>
+                </Dropdown> -->
 
                 <Dropdown align="right" width="48">
                     <template #trigger>
@@ -91,6 +93,8 @@ import { usePage, router } from '@inertiajs/vue3'
 import { onClickOutside } from '@vueuse/core'
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
+
+import BaseSetting from '@/Layouts/Settings/BaseSetting.vue'
 
 import {
     Bars3Icon,

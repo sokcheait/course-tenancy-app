@@ -73,6 +73,13 @@ class User extends Authenticatable
     {
         return $this->morphOne(Address::class, 'addressable')->where('is_primary', true);
     }
+    public function getPermissionArray()
+    {
+        return $this->getAllPermissions()->mapWithKeys(function($pr){
+            return [$pr['name'] => true];
+        });
+   
+    }
     public function scopeActive(Builder $query)
     {
         return $query->where('is_active', true);

@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\DomainController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CountryController;
+use App\Http\Controllers\StateController;
 
 /*
 |--------------------------------------------------------------------------
@@ -89,10 +91,12 @@ Route::middleware([
         return Inertia::render('Dashboard');
     })->name('dashboard');
     
-    Route::resource('/domains', DomainController::class);
     Route::prefix('admin')->name('admin.')
         ->group(function () {
+            Route::resource('/domains', DomainController::class);
             Route::resource('users', UserController::class);
             Route::resource('roles', RoleController::class);
+            Route::get('countries',[CountryController::class,'index'])->name('countries.index');
+            Route::get('states',[StateController::class,'index'])->name('states.index');
         });
 });

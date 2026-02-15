@@ -9,11 +9,37 @@ use App\Models\Role;
 
 class RoleController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $roles = app(Role::class)->paginate(10);
+        $this->authorize('admin.roles.index');
+        $search = $request->search;
+        $is_active = $request->is_active;
+        
+        $roles = Role::query()
+            ->when($search, function ($q) use ($search) {
+                $q->where('name', 'like', "%$search%");
+            })
+            ->when($is_active, function ($q) use ($is_active) {
+                $q->where('is_active', 'like', "%$is_active%");
+            })
+            ->isUser()
+            ->latest()
+            ->paginate(10)
+            ->withQueryString();
         $view = "Roles/Index";
-        return Inertia::render($view, ['roles'=>$roles]);
+        return Inertia::render($view, [
+            'roles'=>$roles,
+            'meta' => [
+                'current_page' => $roles->currentPage(),
+                'last_page' => $roles->lastPage(),
+                'total' => $roles->total(),
+                'from' => $roles->firstItem(),
+                'to' => $roles->lastItem(),
+            ],
+            'filters' => [
+                'search' => $search
+            ]
+        ]);
     }
 
     public function create()
@@ -93,6 +119,7 @@ class RoleController extends Controller
 
         $role->update([
             'name' => $request->name,
+            'is_active' => $request->is_active
         ]);
 
         if($request->permissions){

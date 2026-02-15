@@ -11,6 +11,7 @@ class State extends Model
 
     protected $fillable = [
         'country_id',
+        'country_code',
         'name',
         'iso_code',
     ];

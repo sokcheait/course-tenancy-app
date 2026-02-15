@@ -11,13 +11,18 @@ class UserController extends Controller
 {
     public function index()
     {
+        $this->authorize('admin.users.index');
         $users = app(User::class)->paginate(10);
         $view = "Users/Index";
         return Inertia::render($view, ['users'=>$users]);
     }
     public function create()
     {
-        $roles = app(Role::class)->active()->select('id','name')->get();
+        // $user = auth()->user();
+        // // $user->assignRole(1);
+        // dd($user);
+        $this->authorize('admin.users.create');
+        $roles = app(Role::class)->active()->IsUser()->select('id','name')->get();
         $view = "Users/Create";
         return Inertia::render($view,['roles'=>$roles]);
     }

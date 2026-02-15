@@ -41,6 +41,8 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => Auth::user(),
                 'tenant' => tenant(),
+                'can' =>$request->user() ? $request->user()->getPermissionArray() : [],
+                'is_super_admin' => $request->user() ? $request->user()->roles : null,
             ],
         ]);
     }

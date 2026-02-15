@@ -2,22 +2,26 @@ export default [
     {
         title: 'Dashboard',
         href: '/dashboard',
-        icon: 'HomeIcon'
+        icon: 'HomeIcon',
+        redirect:'dashboard'
     },
     {
         title: 'Domain',
-        href: '/domains',
-        icon: 'ServerIcon'
+        href: '/admin/domains',
+        icon: 'ServerIcon',
+        redirect:'admin.domains.index'
     },
     {
         title: 'User',
         href: '/admin/users',
-        icon: 'UsersIcon'
+        icon: 'UsersIcon',
+        redirect:'admin.users.index'
     },
     {
         title: 'Role',
         href: '/admin/roles',
-        icon: 'KeyIcon'
+        icon: 'KeyIcon',
+        redirect:'admin.roles.index'
     },
 
     // {

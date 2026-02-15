@@ -1,6 +1,6 @@
 <template>
-    <label class="p-2 w-full cursor-pointer">
-        <span class="block mt-2 pb-4">{{ label }} <span v-if="required" class="text-red-500">*</span></span>
+    <label class="px-2 w-full cursor-pointer">
+        <span class="block mt-2 pb-1">{{ label }} <span v-if="required" class="text-red-500">*</span></span>
         <div class="relative">
             <input 
                 type="checkbox" 

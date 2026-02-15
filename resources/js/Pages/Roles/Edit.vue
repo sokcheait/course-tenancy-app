@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted } from 'vue'
 import AppLayout from '@/Layouts/AppLayout.vue'
-import { useForm } from '@inertiajs/inertia-vue3'
+import { useForm, Link } from '@inertiajs/vue3';
 import TextInput from '@/Components/Forms/TextInput.vue'
 import ToggleSwitch from '@/Components/Forms/ToggleSwitch.vue'
 import { HomeIcon, ChevronRightIcon } from '@heroicons/vue/24/outline'
@@ -46,7 +46,11 @@ const submit = () => {
             <div class="flex w-full items-center p-2">
                 <div class="flex items-center text-sm text-gray-600 dark:text-white">
                     <HomeIcon class="w-4 h-4 mx-1" />
-                    <span class="mx-1 mt-[3px]">Home</span>
+                    <span class="mx-1 mt-[3px]">
+                        <Link :href="route('admin.roles.index')" preserve-state>
+                            Home
+                        </Link>
+                    </span>
                     <ChevronRightIcon class="w-4 h-4 mx-1 mt-[1px]" />
                     <span class="mx-1 mt-[3px]">Role</span>
                     <ChevronRightIcon class="w-4 h-4 mx-1 mt-[1px]" />
@@ -64,7 +68,7 @@ const submit = () => {
                         label="Name"
                         v-model="form.name"
                         :errors="form.errors.name"
-                        required
+                        :required="true"
                     />
                     <ToggleSwitch
                         v-model="form.is_active"

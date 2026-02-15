@@ -27,7 +27,7 @@ const submit = () => {
     <Head title="Register" />
     <div class="flex flex-col items-center justify-center min-h-screen p-4 space-y-4 antialiased text-gray-900 bg-gray-100 dark:bg-dark dark:text-light">
         <a href="#" class="inline-block mb-6 text-3xl font-bold tracking-wider uppercase text-primary-dark dark:text-light">
-            K-WD
+            Sok Chea
         </a>
         <main class="">
             <div class="w-full max-w-sm px-4 py-6 space-y-6 bg-white rounded-md dark:bg-darker">
@@ -66,7 +66,7 @@ const submit = () => {
                     <span class="w-20 h-px bg-gray-300"></span>
                 </div>
                 <div class="text-sm text-gray-600 dark:text-gray-400">
-                    Already have an account? <a href="login.html" class="text-blue-600 hover:underline">Login</a>
+                    Already have an account? <a :href="route('admin.login')" class="text-blue-600 hover:underline">Login</a>
                 </div>
             </div>
         </main>

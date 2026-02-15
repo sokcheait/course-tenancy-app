@@ -36,82 +36,17 @@ const submit = () => {
 }
 
 </script>
-
-<!-- <script>
-import { reactive } from 'vue'
-import AppLayout from '@/Layouts/AppLayout.vue';
-import { Head, Link, useForm } from '@inertiajs/vue3';
-import TextInput from '@/Components/Forms/TextInput.vue';
-import ToggleSwitch from '@/Components/Forms/ToggleSwitch.vue';
-import { HomeIcon, ChevronRightIcon } from '@heroicons/vue/24/outline'
-import SaveButton from '@/Components/Actions/SaveButton.vue';
-import BackButton from '@/Components/Actions/BackButton.vue';
-import PermissionSelector from './PermissionSelector.vue'
-import { useToast } from "vue-toastification";
-
-export default {
-    components:{
-        AppLayout,
-        TextInput,
-        Link,
-        Head,
-        ToggleSwitch,
-        SaveButton,
-        BackButton,
-        PermissionSelector,
-        HomeIcon,
-        ChevronRightIcon
-    },
-    setup() {
-        const toast = useToast()
-
-        return {toast};
-    },
-    props: {
-        list_permissions: {
-            type: Object,
-            default: () => []
-        },
-    },
-    data() {
-        return {
-            form: useForm({
-                name: '',
-                is_active: false,
-                permissions: {}
-            })
-        };
-    },
-    
-    watch: {
-        
-    },
-    methods: {
-       submit(){
-            this.form.post(route('admin.roles.store'),{
-                preserveScroll:true,
-                preserveState: true,
-                onSuccess:()=>{
-                    console.log(123);
-                    this.toast.success("Role created successfully")
-                },
-                onError:(e)=>{
-                    
-                    console.log(e)
-                }
-            })
-        }
-    }
-};
-</script> -->
-
 <template>
     <AppLayout title="Roles">
         <template #header>
             <div class="flex w-full items-center p-2">
                 <div class="flex items-center text-sm text-gray-600 dark:text-white">
                     <HomeIcon class="w-4 h-4 mx-1" />
-                    <span class="mx-1 mt-[3px]">Home</span>
+                    <span class="mx-1 mt-[3px]">
+                        <Link :href="route('admin.roles.index')" preserve-state>
+                            Home
+                        </Link>
+                    </span>
                     <ChevronRightIcon class="w-4 h-4 mx-1 mt-[1px]" />
                     <span class="mx-1 mt-[3px]">Role</span>
                     <ChevronRightIcon class="w-4 h-4 mx-1 mt-[1px]" />
@@ -130,7 +65,7 @@ export default {
                                 v-model="form.name"
                                 type="text"
                                 :errors="form.errors.name"
-                                required
+                                :required="true"
                                 placeholder="Please input name" 
                             />
                             <ToggleSwitch v-model="form.is_active" label="Status" :errors="form.errors.is_active" />

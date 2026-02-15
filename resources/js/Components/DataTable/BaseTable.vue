@@ -1,7 +1,9 @@
 <script setup>
-import { Link } from '@inertiajs/vue3'
+import { Link, router } from '@inertiajs/vue3'
+import { ref, watch } from 'vue'
+import DataFilter from './DataFilter.vue'
 
-defineProps({
+const props = defineProps({
     columns: {
         type: Array,
         required: true,
@@ -23,12 +25,61 @@ defineProps({
     emptyText: {
         type: String,
         default: 'No data found.'
-    }
+    },
+    search: {
+        type: String,
+        default: ''
+    },
+    routeName: {
+        type: String,
+        default: ''
+    },
+    filters: { 
+        type:Array, 
+        default:()=>[] 
+    },
+    filterValues: { 
+        type:Object, 
+        default:()=>({}) 
+    },
 })
+const searchText = ref(props.search || '')
+
+let timeout = null
+
+watch(searchText, (val) => {
+    clearTimeout(timeout)
+
+    timeout = setTimeout(() => {
+        router.get(route(props.routeName), {
+            search: val
+        }, {
+            preserveState: true,
+            replace: true,
+            preserveScroll: true
+        })
+    }, 400)
+})
+
 </script>
 
 <template>
     <div class="w-full">
+        <div class="flex justify-between items-center mb-3">
+            <DataFilter
+                v-if="filters.length"
+                :routeName="routeName"
+                :filters="filters"
+                :values="form"
+            />
+            <input
+                v-model="searchText"
+                type="text"
+                placeholder="Search..."
+                class="border px-3 py-2 rounded-md text-sm w-72 focus:ring-2 focus:ring-blue-400"
+            />
+        </div>
+
         <!-- Table -->
         <table class="min-w-full divide-y divide-gray-200">
             <!-- Head -->
@@ -99,18 +150,30 @@ defineProps({
         </table>
 
         <!-- Pagination -->
-        <div v-if="links.length" class="p-4 flex justify-end gap-2">
-            <Link
-                v-for="link in links"
-                :key="link.label"
-                :href="link.url || ''"
-                v-html="link.label"
-                class="px-3 py-1 border rounded text-sm"
-                :class="{
-                    'bg-primary text-white': link.active,
-                    'text-gray-400 pointer-events-none': !link.url
-                }"
-            />
+
+        <div v-if="links.length" class="p-4 flex items-center justify-between">
+
+            
+
+            <div class="text-sm text-gray-500">
+                Page {{ $page.props.meta?.current_page }} of {{ $page.props.meta?.last_page }}
+                • Showing {{ $page.props.meta?.from }}-{{ $page.props.meta?.to }} of {{ $page.props.meta?.total }}
+            </div>
+
+            <!-- RIGHT: LINKS -->
+            <div class="flex gap-2">
+                <Link
+                    v-for="link in links"
+                    :key="link.label"
+                    :href="link.url || ''"
+                    v-html="link.label"
+                    class="px-3 py-1 border rounded text-sm"
+                    :class="{
+                        'bg-primary text-white': link.active,
+                        'text-gray-400 pointer-events-none': !link.url
+                    }"
+                />
+            </div>
         </div>
     </div>
 </template>

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('iso_code', 2)->unique();
             $table->string('iso3', 3)->nullable();
+            $table->string('phone_code')->nullable();
             $table->string('currency_code', 3)->nullable();
             $table->string('currency_name')->nullable();
             $table->string('continent')->nullable();
@@ -28,6 +29,7 @@ return new class extends Migration
         Schema::create('states', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('country_id'); // reference to countries
+            $table->string('country_code')->nullable();
             $table->string('name'); // state/province name
             $table->string('iso_code')->nullable(); // optional code
             $table->timestamps();

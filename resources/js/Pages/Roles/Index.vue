@@ -11,7 +11,9 @@ import {
 } from '@heroicons/vue/24/outline'
 
 defineProps({
-    roles: Object
+    roles: Object,
+    filters: Object,
+    meta: Object
 })
 
 const columns = [
@@ -28,7 +30,11 @@ const columns = [
             <div class="flex w-full items-center p-2">
                 <div class="flex items-center text-sm text-gray-600 dark:text-white">
                     <HomeIcon class="w-4 h-4 mx-1" />
-                    <span class="mx-1 mt-[3px]">Home</span>
+                    <span class="mx-1 mt-[3px]">
+                        <Link :href="route('admin.roles.index')" preserve-state>
+                            Home
+                        </Link>
+                    </span>
                     <ChevronRightIcon class="w-4 h-4 mx-1 mt-[1px]" />
                     <span class="mx-1 mt-[3px]">Role</span>
                 </div>
@@ -43,7 +49,32 @@ const columns = [
             </div>
             <div class="px-0">
                 <div class="bg-white shadow rounded-lg">
-                    <DataTable :columns="columns" :rows="roles?.data" :links="roles?.links" empty-text="No roles found.">
+                    <DataTable 
+                        :columns="columns" 
+                        :rows="roles?.data" 
+                        :links="roles?.links" 
+                        :meta="meta"
+                        empty-text="No roles found." 
+                        :search="filters.search" 
+                        route-name="admin.roles.index"
+                        :filterValues="$page.props.filters"
+                        :filters="[
+                            {
+                                key:'is_active',
+                                type:'select',
+                                label:'Status',
+                                options:[
+                                    {   label:'Active', value:true  },
+                                    {   label:'Inactive', value:false  }
+                                ]
+                            },
+                            {
+                                key:'created_at',
+                                type:'date',
+                                label:'Created'
+                            }
+                        ]"
+                    >
                         <template #is_active="{ value }">
                             <span class="px-2 py-1 rounded text-xs" :class="value ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'">
                                 {{ value ? 'Active' : 'Inactive' }}
