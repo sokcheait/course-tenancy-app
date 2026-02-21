@@ -1,6 +1,6 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
-import { useForm } from '@inertiajs/inertia-vue3'
+import { Head, Link, useForm } from '@inertiajs/vue3';
 import SaveButton from '@/Components/Actions/SaveButton.vue';
 import BackButton from '@/Components/Actions/BackButton.vue';
 import {
@@ -18,7 +18,7 @@ const form = useForm({
 })
 
 const submit = () => {
-    form.post('admin/domains')
+    form.post(route('admin.domains.store'))
 }
 </script>
 

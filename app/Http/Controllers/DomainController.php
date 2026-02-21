@@ -31,7 +31,7 @@ class DomainController extends Controller
             'domain' => $request->company_name.'.'.env("APP_CENTRAL"),
         ]);
 
-        return redirect()->route('domains.create')->with('success', 'Domain created!');
+        return redirect()->route('admin.domains.create')->with('success', 'Domain created!');
     }
 
     public function show()
